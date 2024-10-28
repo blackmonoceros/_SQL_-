@@ -1,10 +1,12 @@
 create database antykwariat
 CREATE TABLE Gatunki (Id_gatunku INT PRIMARY KEY,
 Nazwa_gatunku VARCHAR(100) NOT NULL)
+  
 CREATE TABLE Autorzy (Id_autora INT PRIMARY KEY, Nazwisko VARCHAR(100) NOT NULL,
 Imię1 VARCHAR(100) NULL,
 Imię2 VARCHAR(100) NULL,
 Data_urodzenia DATE NULL)
+  
 CREATE TABLE Książki (Id_książki INT PRIMARY KEY,
 Tytuł VARCHAR(100) NOT NULL,
 Id_autora INT NOT NULL REFERENCES Autorzy(Id_autora), -- zakładamy, że każda książka
@@ -12,10 +14,13 @@ Id_autora INT NOT NULL REFERENCES Autorzy(Id_autora), -- zakładamy, że każda 
 Język_oryginału VARCHAR(100) NULL,
 Rok_pierwszego_wydania INT NOT NULL,
 Uwagi VARCHAR(250) NOT NULL)
+  
 CREATE TABLE Książki_Gatunki ( -- jedna książka może być przypisana do wielu gatunków
 Id_gatunku INT REFERENCES Gatunki(Id_gatunku),
 Id_książki INT REFERENCES Książki(Id_książki),
+  
 PRIMARY KEY(Id_gatunku, Id_książki))
+  
 CREATE TABLE Egzemplarze (Id_egzemplarza INT PRIMARY KEY, -- egzemplarze książek
 Id_książki INT NOT NULL REFERENCES Książki(Id_książki),
 Stan_egzemplarza INT NOT NULL, -- Tu wpisuje się liczby od 1 do 5,
@@ -26,6 +31,7 @@ Język VARCHAR(100) NOT NULL,
 Wydawnictwo VARCHAR(100) NOT NULL,
 Rok_wydania INT NULL,
 Uwagi VARCHAR(250) NOT NULL)
+
 INSERT INTO Gatunki (Id_gatunku, Nazwa_gatunku) VALUES
 (1, 'Powieść'),
 (2, 'Poezja'),
@@ -37,6 +43,7 @@ INSERT INTO Gatunki (Id_gatunku, Nazwa_gatunku) VALUES
 (8, 'Kryminał'),
 (9, 'Historia'),
 (10, 'Przygodowa');
+
 INSERT INTO Autorzy (Id_autora, Nazwisko, Imię1, Imię2, Data_urodzenia) VALUES
 (1, 'Kowalski', 'Jan', NULL, '1980-05-15'),
 (2, 'Nowak', 'Anna', 'Maria', '1975-10-22'),
@@ -48,6 +55,7 @@ INSERT INTO Autorzy (Id_autora, Nazwisko, Imię1, Imię2, Data_urodzenia) VALUES
 (8, 'Pawlak', 'Karolina', 'Joanna', '1983-06-27'),
 (9, 'Michalski', 'Marek', 'Robert', '1978-11-10'),
 (10, 'Szymańska', 'Ewa', 'Elżbieta', '1992-04-25');
+
 INSERT INTO Książki (Id_książki, Tytuł, Id_autora, Język_oryginału, Rok_pierwszego_wydania,
 Uwagi) VALUES
 (1, 'Pan Tadeusz', 1, 'Polski', 1834, 'Klasyczna polska epopeja'),
@@ -60,6 +68,7 @@ Uwagi) VALUES
 (8, 'Dzieci z Bullerbyn', 7, 'Szwedzki', 1947, 'Książka dla dzieci'),
 (9, 'Opowieści z Narnii', 10, 'Angielski', 1950, 'Fantasy dla dzieci'),
 (10, 'Panienka z okienka', 9, 'Polski', 1988, 'Przygodowa powieść młodzieżowa');
+
 INSERT INTO Książki_Gatunki (Id_gatunku, Id_książki) VALUES
 (1, 1),
 (2, 2),
@@ -71,6 +80,7 @@ INSERT INTO Książki_Gatunki (Id_gatunku, Id_książki) VALUES
 (8, 8),
 (9, 9),
 (10, 10);
+
 INSERT INTO Egzemplarze (Id_egzemplarza, Id_książki, Stan_egzemplarza, Cena, Język,
 Wydawnictwo, Rok_wydania, Uwagi) VALUES
 (1, 1, 4, 29.99, 'Polski', 'Wydawnictwo A', 2010, 'Egzemplarz używany'),
